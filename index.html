@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>موقع التحقق</title>
+    <title>Giga Man</title>
     <style>
         /* التنسيقات العامة */
         body {
@@ -15,30 +15,11 @@
             padding: 15px;
             text-align: center;
             margin: 0;
-            position: relative;
         }
         
         body.dark-theme {
             background-color: #121212;
             color: #f0f0f0;
-        }
-        
-        /* خلفية النجوم للوضع الداكن */
-        body.dark-theme::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                radial-gradient(white 1px, transparent 1px),
-                radial-gradient(white 1px, transparent 1px);
-            background-size: 30px 30px;
-            background-position: 0 0, 15px 15px;
-            opacity: 0.1;
-            z-index: -1;
-            pointer-events: none;
         }
         
         .container {
@@ -50,6 +31,7 @@
             margin: 15px auto;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.6s ease;
+            position: relative;
         }
         
         body.dark-theme .container {
@@ -139,17 +121,11 @@
             font-size: 16px;
         }
 
-        body.dark-theme #send-btn {
-            background-color: #ffffff;
-            color: #000000;
-        }
-
-        /* زر تبديل الوضع الليلي - من Uiverse.io */
+        /* زر تبديل الوضع الليلي - معدل ليكون داخل المربع */
         .theme-switcher {
-            position: fixed;
+            position: absolute;
             top: 15px;
             left: 15px;
-            z-index: 100;
         }
         
         .switch {
@@ -378,14 +354,9 @@
           left: 15px;
         }
         
-        /* تعديلات لتنسيق العناصر */
+        /* تعديلات لتنسيق العناصر مع وجود الزر */
         h1 {
             margin-top: 10px;
-            color: #000000;
-        }
-        
-        body.dark-theme h1 {
-            color: #ffffff;
         }
         
         .date-selectors {
@@ -401,15 +372,10 @@
         }
         
         button {
-            background-color: #000000;
+            background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
-        }
-        
-        body.dark-theme button {
-            background-color: #ffffff;
-            color: #000000;
         }
         
         #message {
@@ -441,78 +407,78 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- زر تبديل الوضع الليلي - من Uiverse.io -->
-    <div class="theme-switcher">
-        <label class="switch">
-          <input id="input" type="checkbox" checked="darkTheme" />
-          <div class="slider round">
-            <div class="sun-moon">
-              <svg id="moon-dot-1" class="moon-dot" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="50"></circle>
-              </svg>
-              <svg id="moon-dot-2" class="moon-dot" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="50"></circle>
-              </svg>
-              <svg id="moon-dot-3" class="moon-dot" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="50"></circle>
-              </svg>
-              <svg id="light-ray-1" class="light-ray" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="50"></circle>
-              </svg>
-              <svg id="light-ray-2" class="light-ray" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="50"></circle>
-              </svg>
-              <svg id="light-ray-3" class="light-ray" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="50"></circle>
-              </svg>
-
-              <svg id="cloud-1" class="cloud-dark" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="50"></circle>
-              </svg>
-              <svg id="cloud-2" class="cloud-dark" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="50"></circle>
-              </svg>
-              <svg id="cloud-3" class="cloud-dark" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="50"></circle>
-              </svg>
-              <svg id="cloud-4" class="cloud-light" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="50"></circle>
-              </svg>
-              <svg id="cloud-5" class="cloud-light" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="50"></circle>
-              </svg>
-              <svg id="cloud-6" class="cloud-light" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="50"></circle>
-              </svg>
-            </div>
-            <div class="stars">
-              <svg id="star-1" class="star" viewBox="0 0 20 20">
-                <path
-                  d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
-                ></path>
-              </svg>
-              <svg id="star-2" class="star" viewBox="0 0 20 20">
-                <path
-                  d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
-                ></path>
-              </svg>
-              <svg id="star-3" class="star" viewBox="0 0 20 20">
-                <path
-                  d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
-                ></path>
-              </svg>
-              <svg id="star-4" class="star" viewBox="0 0 20 20">
-                <path
-                  d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
-                ></path>
-              </svg>
-            </div>
-          </div>
-        </label>
-    </div>
-
     <!-- واجهة التحقق -->
     <div class="container">
+        <!-- زر تبديل الوضع الليلي - داخل المربع -->
+        <div class="theme-switcher">
+            <label class="switch">
+              <input id="input" type="checkbox">
+              <div class="slider round">
+                <div class="sun-moon">
+                  <svg id="moon-dot-1" class="moon-dot" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="50"></circle>
+                  </svg>
+                  <svg id="moon-dot-2" class="moon-dot" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="50"></circle>
+                  </svg>
+                  <svg id="moon-dot-3" class="moon-dot" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="50"></circle>
+                  </svg>
+                  <svg id="light-ray-1" class="light-ray" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="50"></circle>
+                  </svg>
+                  <svg id="light-ray-2" class="light-ray" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="50"></circle>
+                  </svg>
+                  <svg id="light-ray-3" class="light-ray" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="50"></circle>
+                  </svg>
+
+                  <svg id="cloud-1" class="cloud-dark" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="50"></circle>
+                  </svg>
+                  <svg id="cloud-2" class="cloud-dark" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="50"></circle>
+                  </svg>
+                  <svg id="cloud-3" class="cloud-dark" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="50"></circle>
+                  </svg>
+                  <svg id="cloud-4" class="cloud-light" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="50"></circle>
+                  </svg>
+                  <svg id="cloud-5" class="cloud-light" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="50"></circle>
+                  </svg>
+                  <svg id="cloud-6" class="cloud-light" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="50"></circle>
+                  </svg>
+                </div>
+                <div class="stars">
+                  <svg id="star-1" class="star" viewBox="0 0 20 20">
+                    <path
+                      d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+                    ></path>
+                  </svg>
+                  <svg id="star-2" class="star" viewBox="0 0 20 20">
+                    <path
+                      d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+                    ></path>
+                  </svg>
+                  <svg id="star-3" class="star" viewBox="0 0 20 20">
+                    <path
+                      d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+                    ></path>
+                  </svg>
+                  <svg id="star-4" class="star" viewBox="0 0 20 20">
+                    <path
+                      d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+            </label>
+        </div>
+
         <h1>التحقق</h1>
         <p>اختر تاريخ ميلادك للمتابعة:</p>
         
@@ -558,7 +524,7 @@
 
         <!-- قسم المحادثة -->
         <div id="chat-container">
-            <h3>Giga Man</h3>
+            <h3>الدردشة مع Giga Man</h3>
             <div id="chat-messages"></div>
             <div>
                 <input type="text" id="chat-input" placeholder="اكتب رسالتك...">
@@ -572,14 +538,14 @@
         const themeToggle = document.getElementById('input');
         const body = document.body;
         
-        // التعديل النهائي - الوضع الليلي افتراضيًا
-        if (localStorage.getItem('darkTheme') === 'false') {
-            body.classList.remove('dark-theme');
-            themeToggle.checked = false;
-        } else {
+        // التعديل النهائي - الوضع الأبيض افتراضيًا
+        if (localStorage.getItem('darkTheme') === 'true') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
-            localStorage.setItem('darkTheme', 'true');
+        } else {
+            body.classList.remove('dark-theme');
+            themeToggle.checked = false;
+            localStorage.setItem('darkTheme', 'false'); // حفظ الوضع الأبيض صراحة
         }
         
         // تبديل الوضع مع تأثيرات متسقة
@@ -601,11 +567,14 @@
             const message = document.getElementById('message');
 
             if (day === "9" && month === "5" && year === "2011") {
-                message.innerHTML = "تم التحقق بنجاح! يمكنك الآن الدردشة مع Giga Man.";
+                message.innerHTML = "تم التحقق بنجاح";
                 message.className = "success";
                 document.getElementById('chat-container').style.display = 'block';
+                
+                // إضافة رسالة ترحيبية
+                addMessage('مرحباً! أنا Giga Man، كيف يمكنني مساعدتك؟', 'giga');
             } else {
-                message.innerHTML = "التاريخ غير صحيح. صل عالنبي";
+                message.innerHTML = "صل عالنبي";
                 message.className = "error";
                 document.getElementById('chat-container').style.display = 'none';
             }
@@ -622,7 +591,7 @@
                 messageDiv.textContent = text;
             } else {
                 messageDiv.classList.add('giga-message');
-                messageDiv.textContent = text;
+                messageDiv.textContent = 'Giga Man: ' + text;
             }
             
             chatMessages.appendChild(messageDiv);
@@ -637,6 +606,10 @@
             if (text) {
                 addMessage(text, 'user');
                 input.value = '';
+                
+                setTimeout(() => {
+                    addMessage('', 'giga');
+                }, 1000);
             }
         }
 
