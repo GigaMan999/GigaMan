@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Giga Man</title>
+    <title>موقع التحقق</title>
     <style>
         /* التنسيقات العامة */
         body {
@@ -15,11 +15,30 @@
             padding: 15px;
             text-align: center;
             margin: 0;
+            position: relative;
         }
         
         body.dark-theme {
             background-color: #121212;
             color: #f0f0f0;
+        }
+        
+        /* خلفية النجوم للوضع الداكن */
+        body.dark-theme::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(white 1px, transparent 1px),
+                radial-gradient(white 1px, transparent 1px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            opacity: 0.1;
+            z-index: -1;
+            pointer-events: none;
         }
         
         .container {
@@ -118,6 +137,11 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+        }
+
+        body.dark-theme #send-btn {
+            background-color: #ffffff;
+            color: #000000;
         }
 
         /* زر تبديل الوضع الليلي - من Uiverse.io */
@@ -357,7 +381,11 @@
         /* تعديلات لتنسيق العناصر */
         h1 {
             margin-top: 10px;
-            color: #4CAF50;
+            color: #000000;
+        }
+        
+        body.dark-theme h1 {
+            color: #ffffff;
         }
         
         .date-selectors {
@@ -373,10 +401,15 @@
         }
         
         button {
-            background-color: #4CAF50;
+            background-color: #000000;
             color: white;
             border: none;
             cursor: pointer;
+        }
+        
+        body.dark-theme button {
+            background-color: #ffffff;
+            color: #000000;
         }
         
         #message {
