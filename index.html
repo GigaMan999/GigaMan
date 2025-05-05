@@ -8,104 +8,22 @@
         /* التنسيقات العامة */
         body {
             font-family: 'Tajawal', sans-serif;
+            background-color: white;
             color: #333;
             transition: background-color 0.6s ease, color 0.6s ease;
             min-height: 100vh;
             padding: 15px;
             text-align: center;
             margin: 0;
-            overflow-x: hidden;
-            position: relative;
-            background-color: #87CEEB; /* لون السماء النهارية */
         }
         
         body.dark-theme {
-            background-color: #0a0a1a;
+            background-color: #121212;
             color: #f0f0f0;
         }
         
-        /* خلفية النهار - سحب */
-        .day-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-            opacity: 1;
-            transition: opacity 0.8s ease;
-        }
-        
-        body.dark-theme .day-background {
-            opacity: 0;
-        }
-        
-        .cloud {
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            filter: blur(15px);
-            animation: floatCloud linear infinite;
-        }
-        
-        @keyframes floatCloud {
-            0% { transform: translateX(-20vw) translateY(0); }
-            100% { transform: translateX(120vw) translateY(-50px); }
-        }
-        
-        /* خلفية الليل - نجوم */
-        .night-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-        
-        body.dark-theme .night-background {
-            opacity: 1;
-        }
-        
-        .star {
-            position: absolute;
-            background-color: white;
-            border-radius: 50%;
-            animation: twinkle var(--duration) infinite ease-in-out;
-        }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
-        }
-        
-        .shooting-star {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
-            animation: shooting var(--shooting-duration) linear infinite;
-            transform: rotate(45deg);
-        }
-        
-        @keyframes shooting {
-            0% { 
-                transform: translateX(0) translateY(0) rotate(45deg);
-                opacity: 0;
-            }
-            10% { opacity: 1; }
-            100% { 
-                transform: translateX(1000px) translateY(-1000px) rotate(45deg);
-                opacity: 0;
-            }
-        }
-        
         .container {
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
             padding: 20px;
             width: 95%;
@@ -113,14 +31,11 @@
             margin: 15px auto;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.6s ease;
-            position: relative;
-            border: 1px solid rgba(0, 0, 0, 0.1);
         }
         
         body.dark-theme .container {
-            background-color: rgba(10, 10, 30, 0.85);
+            background-color: rgba(30, 30, 30, 0.9);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* تنسيقات المحادثة */
@@ -134,8 +49,8 @@
         }
 
         body.dark-theme #chat-container {
-            background-color: rgba(20, 20, 40, 0.8);
-            border-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(30, 30, 30, 0.8);
+            border-color: #444;
         }
 
         #chat-messages {
@@ -149,7 +64,7 @@
         }
 
         body.dark-theme #chat-messages {
-            border-color: rgba(255, 255, 255, 0.1);
+            border-color: #444;
         }
 
         .message {
@@ -166,7 +81,7 @@
         }
 
         body.dark-theme .user-message {
-            background-color: rgba(30, 70, 120, 0.7);
+            background-color: #0d47a1;
             color: white;
         }
 
@@ -176,7 +91,7 @@
         }
 
         body.dark-theme .giga-message {
-            background-color: rgba(60, 60, 90, 0.7);
+            background-color: #424242;
             color: white;
         }
 
@@ -187,13 +102,12 @@
             border-radius: 5px;
             margin-left: 5px;
             font-size: 16px;
-            background-color: white;
         }
 
         body.dark-theme #chat-input {
-            background-color: rgba(20, 20, 40, 0.8);
+            background-color: #333;
             color: white;
-            border-color: rgba(255, 255, 255, 0.2);
+            border-color: #555;
         }
 
         #send-btn {
@@ -444,13 +358,6 @@
         h1 {
             margin-top: 10px;
             color: #4CAF50;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        body.dark-theme h1 {
-            color: #4CAF50;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
         .date-selectors {
@@ -463,14 +370,6 @@
             border-radius: 5px;
             border: 1px solid #ddd;
             font-family: 'Tajawal', sans-serif;
-            background-color: white;
-            font-size: 16px;
-        }
-        
-        body.dark-theme select {
-            background-color: rgba(20, 20, 40, 0.8);
-            color: white;
-            border-color: rgba(255, 255, 255, 0.2);
         }
         
         button {
@@ -478,18 +377,12 @@
             color: white;
             border: none;
             cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        button:hover {
-            background-color: #45a049;
         }
         
         #message {
             margin: 15px 0;
             padding: 10px;
             border-radius: 5px;
-            font-weight: bold;
         }
         
         .success {
@@ -503,24 +396,18 @@
         }
         
         body.dark-theme .success {
-            background-color: rgba(40, 80, 40, 0.7);
+            background-color: #2d4821;
             color: #dff0d8;
         }
         
         body.dark-theme .error {
-            background-color: rgba(80, 40, 40, 0.7);
+            background-color: #482121;
             color: #f2dede;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- خلفية النهار - سحب -->
-    <div class="day-background" id="day-bg"></div>
-    
-    <!-- خلفية الليل - نجوم -->
-    <div class="night-background" id="night-bg"></div>
-
     <!-- زر تبديل الوضع الليلي - من Uiverse.io -->
     <div class="theme-switcher">
         <label class="switch">
@@ -591,9 +478,9 @@
         </label>
     </div>
 
-    <!-- واجهة Giga Man -->
+    <!-- واجهة التحقق -->
     <div class="container">
-        <h1>Giga Man</h1>
+        <h1>التحقق</h1>
         <p>اختر تاريخ ميلادك للمتابعة:</p>
         
         <div class="date-selectors">
@@ -648,87 +535,11 @@
     </div>
 
     <script>
-        // إنشاء السحب لخلفية النهار
-        function createClouds() {
-            const dayBg = document.getElementById('day-bg');
-            const cloudCount = 8;
-            
-            for (let i = 0; i < cloudCount; i++) {
-                const cloud = document.createElement('div');
-                cloud.classList.add('cloud');
-                
-                // أحجام عشوائية للسحب
-                const width = 100 + Math.random() * 150;
-                const height = width * (0.3 + Math.random() * 0.3);
-                cloud.style.width = `${width}px`;
-                cloud.style.height = `${height}px`;
-                
-                // مواقع عشوائية
-                cloud.style.left = `${-width}px`;
-                cloud.style.top = `${10 + Math.random() * 80}%`;
-                
-                // شفافية عشوائية
-                cloud.style.opacity = 0.7 + Math.random() * 0.3;
-                
-                // سرعات عشوائية
-                const duration = 30 + Math.random() * 60;
-                cloud.style.animationDuration = `${duration}s`;
-                cloud.style.animationDelay = `${Math.random() * 20}s`;
-                
-                dayBg.appendChild(cloud);
-            }
-        }
-        
-        // إنشاء النجوم لخلفية الليل
-        function createStars() {
-            const nightBg = document.getElementById('night-bg');
-            const starsCount = 200;
-            const shootingStarsCount = 3;
-            
-            // إنشاء النجوم الثابتة
-            for (let i = 0; i < starsCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                
-                // أحجام عشوائية للنجوم
-                const size = Math.random() * 3;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                
-                // مواقع عشوائية
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                
-                // تباين عشوائي في الوميض
-                star.style.setProperty('--duration', `${5 + Math.random() * 10}s`);
-                
-                nightBg.appendChild(star);
-            }
-            
-            // إنشاء النجوم الشهب
-            for (let i = 0; i < shootingStarsCount; i++) {
-                const shootingStar = document.createElement('div');
-                shootingStar.classList.add('shooting-star');
-                
-                // مواقع عشوائية
-                shootingStar.style.left = `${Math.random() * 100}%`;
-                shootingStar.style.top = `${Math.random() * 100}%`;
-                
-                // سرعات عشوائية
-                shootingStar.style.setProperty('--shooting-duration', `${3 + Math.random() * 5}s`);
-                
-                // تأخير عشوائي لبدء الحركة
-                shootingStar.style.animationDelay = `${Math.random() * 10}s`;
-                
-                nightBg.appendChild(shootingStar);
-            }
-        }
-        
         // التحكم في الوضع الليلي/النهاري
         const themeToggle = document.getElementById('input');
         const body = document.body;
         
-        // الوضع الليلي افتراضيًا
+        // التعديل النهائي - الوضع الليلي افتراضيًا
         if (localStorage.getItem('darkTheme') === 'false') {
             body.classList.remove('dark-theme');
             themeToggle.checked = false;
@@ -802,12 +613,6 @@
                 sendMessage();
             }
         });
-        
-        // إنشاء الخلفيات عند تحميل الصفحة
-        window.onload = function() {
-            createClouds();
-            createStars();
-        };
     </script>
 </body>
 </html>
