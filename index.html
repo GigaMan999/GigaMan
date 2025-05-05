@@ -524,7 +524,7 @@
 
         <!-- قسم المحادثة -->
         <div id="chat-container">
-            <h3>الدردشة مع Giga Man</h3>
+            <h3>Giga Man</h3>
             <div id="chat-messages"></div>
             <div>
                 <input type="text" id="chat-input" placeholder="اكتب رسالتك...">
@@ -570,9 +570,6 @@
                 message.innerHTML = "تم التحقق بنجاح";
                 message.className = "success";
                 document.getElementById('chat-container').style.display = 'block';
-                
-                // إضافة رسالة ترحيبية
-                addMessage('مرحباً! أنا Giga Man، كيف يمكنني مساعدتك؟', 'giga');
             } else {
                 message.innerHTML = "صل عالنبي";
                 message.className = "error";
@@ -606,10 +603,6 @@
             if (text) {
                 addMessage(text, 'user');
                 input.value = '';
-                
-                setTimeout(() => {
-                    addMessage('', 'giga');
-                }, 1000);
             }
         }
 
