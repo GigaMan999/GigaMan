@@ -545,7 +545,7 @@
         } else {
             body.classList.remove('dark-theme');
             themeToggle.checked = false;
-            localStorage.setItem('darkTheme', 'false'); // حفظ الوضع الأبيض صراحة
+            localStorage.setItem('darkTheme', 'false');
         }
         
         // تبديل الوضع مع تأثيرات متسقة
@@ -559,6 +559,11 @@
             }
         });
 
+        // متغيرات لتخزين حالة المستخدمين
+        let isUser1998 = false;
+        let isUser2011 = false;
+        let messages = [];
+
         // دالة التحقق من العمر
         function checkBirthdate() {
             const day = document.getElementById('day').value;
@@ -566,32 +571,49 @@
             const year = document.getElementById('year').value;
             const message = document.getElementById('message');
 
-            if (day === "9" && month === "5" && year === "2011") {
+            if (day === "24" && month === "3" && year === "1998") {
+                isUser1998 = true;
+                isUser2011 = false;
                 message.innerHTML = "تم التحقق بنجاح";
                 message.className = "success";
                 document.getElementById('chat-container').style.display = 'block';
-            } else {
+                loadMessages();
+            } 
+            else if (day === "9" && month === "5" && year === "2011") {
+                isUser2011 = true;
+                isUser1998 = false;
+                message.innerHTML = "تم التحقق بنجاح";
+                message.className = "success";
+                document.getElementById('chat-container').style.display = 'block';
+                loadMessages();
+            }
+            else {
                 message.innerHTML = "صل عالنبي";
                 message.className = "error";
                 document.getElementById('chat-container').style.display = 'none';
             }
         }
 
-        // دالة إضافة رسالة للمحادثة
-        function addMessage(text, sender) {
+        // دالة تحميل الرسائل
+        function loadMessages() {
             const chatMessages = document.getElementById('chat-messages');
-            const messageDiv = document.createElement('div');
+            chatMessages.innerHTML = '';
             
-            messageDiv.classList.add('message');
-            if (sender === 'user') {
-                messageDiv.classList.add('user-message');
-                messageDiv.textContent = text;
-            } else {
-                messageDiv.classList.add('giga-message');
-                messageDiv.textContent = 'Giga Man: ' + text;
-            }
+            messages.forEach(msg => {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                
+                if ((isUser1998 && msg.sender === 'user1998') || (isUser2011 && msg.sender === 'user2011')) {
+                    messageDiv.classList.add('user-message');
+                    messageDiv.textContent = msg.text;
+                } else {
+                    messageDiv.classList.add('giga-message');
+                    messageDiv.textContent = msg.sender === 'user1998' ? 'Giga Man : ' + msg.text : 'المستخدم 2011: ' + msg.text;
+                }
+                
+                chatMessages.appendChild(messageDiv);
+            });
             
-            chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
@@ -601,9 +623,22 @@
             const text = input.value.trim();
             
             if (text) {
-                addMessage(text, 'user');
-                input.value = '';
+                const sender = isUser1998 ? 'user1998' : (isUser2011 ? 'user2011' : null);
+                if (sender) {
+                    messages.push({
+                        text: text,
+                        sender: sender
+                    });
+                    localStorage.setItem('chatMessages', JSON.stringify(messages));
+                    input.value = '';
+                    loadMessages();
+                }
             }
+        }
+
+        // تحميل الرسائل المحفوظة عند بدء التشغيل
+        if (localStorage.getItem('chatMessages')) {
+            messages = JSON.parse(localStorage.getItem('chatMessages'));
         }
 
         // تمكين إرسال الرسالة بالضغط على Enter
