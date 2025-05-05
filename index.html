@@ -15,6 +15,8 @@
             padding: 15px;
             text-align: center;
             margin: 0;
+            overflow: hidden;
+            position: relative;
         }
         
         body.dark-theme {
@@ -32,6 +34,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.6s ease;
             position: relative;
+            z-index: 10;
         }
         
         body.dark-theme .container {
@@ -39,93 +42,12 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        /* تنسيقات المحادثة */
-        #chat-container {
-            display: none;
-            margin-top: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 15px;
-            background-color: rgba(255, 255, 255, 0.8);
-        }
-
-        body.dark-theme #chat-container {
-            background-color: rgba(30, 30, 30, 0.8);
-            border-color: #444;
-        }
-
-        #chat-messages {
-            height: 150px;
-            overflow-y: auto;
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #eee;
-            border-radius: 5px;
-            text-align: right;
-        }
-
-        body.dark-theme #chat-messages {
-            border-color: #444;
-        }
-
-        .message {
-            margin: 5px 0;
-            padding: 8px 12px;
-            border-radius: 5px;
-            display: inline-block;
-            max-width: 80%;
-        }
-
-        .user-message {
-            background-color: #e3f2fd;
-            margin-left: auto;
-        }
-
-        body.dark-theme .user-message {
-            background-color: #0d47a1;
-            color: white;
-        }
-
-        .giga-message {
-            background-color: #f1f1f1;
-            margin-right: auto;
-        }
-
-        body.dark-theme .giga-message {
-            background-color: #424242;
-            color: white;
-        }
-
-        #chat-input {
-            width: 70%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-left: 5px;
-            font-size: 16px;
-        }
-
-        body.dark-theme #chat-input {
-            background-color: #333;
-            color: white;
-            border-color: #555;
-        }
-
-        #send-btn {
-            padding: 10px 15px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
         /* زر تبديل الوضع الليلي - معدل ليكون داخل المربع */
         .theme-switcher {
             position: absolute;
             top: 15px;
             left: 15px;
+            z-index: 100;
         }
         
         .switch {
@@ -403,6 +325,103 @@
             background-color: #482121;
             color: #f2dede;
         }
+        
+        /* تنسيقات الصفحة الأولى */
+        #welcome-container {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+        }
+        
+        #welcome-title {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        #welcome-subtitle {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        body.dark-theme #welcome-subtitle {
+            color: #aaa;
+        }
+        
+        #welcome-btn {
+            padding: 12px 24px;
+            font-size: 18px;
+        }
+        
+        /* تنسيقات السؤال والخيارات */
+        #question-container {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+        }
+        
+        #question {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .options-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .option-btn {
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        
+        .option-btn:hover {
+            transform: scale(1.05);
+            background-color: #45a049;
+        }
+        
+        /* تأثيرات الزهور */
+        .flower {
+            position: absolute;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 5;
+            animation: flower-float 3s linear forwards;
+        }
+        
+        @keyframes flower-float {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        /* رسالة الإجابة الصحيحة */
+        .correct-answer {
+            font-size: 28px;
+            color: #4CAF50;
+            margin-top: 20px;
+            font-weight: bold;
+            animation: fadeIn 1s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -522,14 +541,22 @@
         <button onclick="checkBirthdate()">تحقق</button>
         <div id="message"></div>
 
-        <!-- قسم المحادثة -->
-        <div id="chat-container">
-            <h3>Giga Man</h3>
-            <div id="chat-messages"></div>
-            <div>
-                <input type="text" id="chat-input" placeholder="اكتب رسالتك...">
-                <button id="send-btn" onclick="sendMessage()">إرسال</button>
+        <!-- صفحة الترحيب -->
+        <div id="welcome-container">
+            <div id="welcome-title">متزعليش مني يا منة</div>
+            <div id="welcome-subtitle">طيب؟</div>
+            <button id="welcome-btn" onclick="showQuestion()">طيب</button>
+        </div>
+
+        <!-- قسم السؤال -->
+        <div id="question-container">
+            <div id="question">من صاحب هذا التاريخ الذي يقرأ الآن؟</div>
+            <div class="options-container">
+                <button class="option-btn" onclick="selectAnswer(this)">قَمَر</button>
+                <button class="option-btn" onclick="selectAnswer(this)">بَدر</button>
+                <button class="option-btn" onclick="selectAnswer(this)">هِلَال</button>
             </div>
+            <div id="answer-message" class="correct-answer" style="display: none;">أَصَبتِ</div>
         </div>
     </div>
 
@@ -559,94 +586,89 @@
             }
         });
 
-        // متغيرات لتخزين حالة المستخدمين
-        let isUser1998 = false;
-        let isUser2011 = false;
-        let messages = [];
+        // مصفوفة الزهور (سنستخدم رموز Unicode للزهور)
+        const flowerSymbols = [
+            '🌸', '🌺', '🌻', '🌼', '🌷', 
+            '🌹', '🏵️', '💮', '🏵️', '🌺'
+        ];
+
+        // دالة إنشاء زهرة
+        function createFlower(x, y) {
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+            
+            // اختيار رمز زهرة عشوائي
+            const randomFlower = flowerSymbols[Math.floor(Math.random() * flowerSymbols.length)];
+            flower.textContent = randomFlower;
+            flower.style.fontSize = `${Math.random() * 20 + 20}px`;
+            
+            // تحديد موقع الزهرة
+            flower.style.left = `${x}px`;
+            flower.style.top = `${y}px`;
+            
+            // تحديد اتجاه الحركة العشوائي
+            const tx = (Math.random() - 0.5) * 300;
+            const ty = (Math.random() - 0.5) * 300;
+            flower.style.setProperty('--tx', `${tx}px`);
+            flower.style.setProperty('--ty', `${ty}px`);
+            
+            document.body.appendChild(flower);
+            
+            // إزالة الزهرة بعد انتهاء الحركة
+            setTimeout(() => {
+                flower.remove();
+            }, 4000);
+        }
+
+        // دالة تفجير الزهور من نقطة
+        function explodeFlowers(x, y) {
+            // إنشاء 15 زهرة
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    createFlower(x, y);
+                }, i * 100);
+            }
+        }
+
+        // دالة اختيار الإجابة
+        function selectAnswer(button) {
+            // إظهار رسالة "أَصَبتِ"
+            document.getElementById('answer-message').style.display = 'block';
+            
+            // الحصول على موقع الزر
+            const rect = button.getBoundingClientRect();
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
+            
+            // تفجير الزهور من موقع الزر
+            explodeFlowers(x, y);
+        }
+
+        // دالة عرض سؤال الاختيار
+        function showQuestion() {
+            document.getElementById('welcome-container').style.display = 'none';
+            document.getElementById('question-container').style.display = 'block';
+        }
 
         // دالة التحقق من العمر
         function checkBirthdate() {
             const day = document.getElementById('day').value;
             const month = document.getElementById('month').value;
             const year = document.getElementById('year').value;
-            const message = document.getElementById('message');
+            const messageEl = document.getElementById('message');
 
-            if (day === "24" && month === "3" && year === "1998") {
-                isUser1998 = true;
-                isUser2011 = false;
-                message.innerHTML = "تم التحقق بنجاح";
-                message.className = "success";
-                document.getElementById('chat-container').style.display = 'block';
-                loadMessages();
-            } 
-            else if (day === "9" && month === "5" && year === "2011") {
-                isUser2011 = true;
-                isUser1998 = false;
-                message.innerHTML = "تم التحقق بنجاح";
-                message.className = "success";
-                document.getElementById('chat-container').style.display = 'block';
-                loadMessages();
+            if (day === "9" && month === "5" && year === "2011") {
+                messageEl.innerHTML = "تم التحقق بنجاح";
+                messageEl.className = "success";
+                document.getElementById('welcome-container').style.display = 'block';
             }
             else {
-                message.innerHTML = "صل عالنبي";
-                message.className = "error";
-                document.getElementById('chat-container').style.display = 'none';
+                messageEl.innerHTML = "صل عالنبي";
+                messageEl.className = "error";
+                document.getElementById('welcome-container').style.display = 'none';
+                document.getElementById('question-container').style.display = 'none';
             }
         }
-
-        // دالة تحميل الرسائل
-        function loadMessages() {
-            const chatMessages = document.getElementById('chat-messages');
-            chatMessages.innerHTML = '';
-            
-            messages.forEach(msg => {
-                const messageDiv = document.createElement('div');
-                messageDiv.classList.add('message');
-                
-                if ((isUser1998 && msg.sender === 'user1998') || (isUser2011 && msg.sender === 'user2011')) {
-                    messageDiv.classList.add('user-message');
-                    messageDiv.textContent = msg.text;
-                } else {
-                    messageDiv.classList.add('giga-message');
-                    messageDiv.textContent = msg.sender === 'user1998' ? 'Giga Man : ' + msg.text : 'المستخدم 2011: ' + msg.text;
-                }
-                
-                chatMessages.appendChild(messageDiv);
-            });
-            
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // دالة إرسال الرسالة
-        function sendMessage() {
-            const input = document.getElementById('chat-input');
-            const text = input.value.trim();
-            
-            if (text) {
-                const sender = isUser1998 ? 'user1998' : (isUser2011 ? 'user2011' : null);
-                if (sender) {
-                    messages.push({
-                        text: text,
-                        sender: sender
-                    });
-                    localStorage.setItem('chatMessages', JSON.stringify(messages));
-                    input.value = '';
-                    loadMessages();
-                }
-            }
-        }
-
-        // تحميل الرسائل المحفوظة عند بدء التشغيل
-        if (localStorage.getItem('chatMessages')) {
-            messages = JSON.parse(localStorage.getItem('chatMessages'));
-        }
-
-        // تمكين إرسال الرسالة بالضغط على Enter
-        document.getElementById('chat-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
     </script>
 </body>
 </html>
