@@ -620,14 +620,72 @@
             }, 4000);
         }
 
-        // دالة تفجير الزهور من نقطة
-        function explodeFlowers(x, y) {
-            // إنشاء 15 زهرة
-            for (let i = 0; i < 15; i++) {
-                setTimeout(() => {
-                    createFlower(x, y);
-                }, i * 100);
+        // دالة إنشاء زهرة تسقط من أعلى الشاشة
+        function createFallingFlower() {
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+            
+            // اختيار رمز زهرة عشوائي
+            const randomFlower = flowerSymbols[Math.floor(Math.random() * flowerSymbols.length)];
+            flower.textContent = randomFlower;
+            flower.style.fontSize = `${Math.random() * 20 + 20}px`;
+            
+            // تحديد موقع البداية عشوائي في أعلى الشاشة
+            const startX = Math.random() * window.innerWidth;
+            flower.style.left = `${startX}px`;
+            flower.style.top = `-50px`;
+            
+            // تحديد اتجاه الحركة لأسفل مع بعض التمايل الجانبي
+            const tx = (Math.random() - 0.5) * 100;
+            const ty = window.innerHeight + 50;
+            flower.style.setProperty('--tx', `${tx}px`);
+            flower.style.setProperty('--ty', `${ty}px`);
+            
+            // مدة أطول للزهور الساقطة
+            flower.style.animationDuration = `${Math.random() * 3 + 5}s`;
+            
+            document.body.appendChild(flower);
+            
+            // إزالة الزهرة بعد انتهاء الحركة
+            setTimeout(() => {
+                flower.remove();
+            }, 6000);
+        }
+
+        // دالة تفجير الزهور على شكل قلب
+        function explodeHeart(x, y) {
+            // نقاط لتشكيل القلب
+            const heartPoints = [];
+            const size = 15;
+            
+            for (let i = 0; i < 20; i++) {
+                // حساب نقاط القلب باستخدام معادلة القلب
+                const t = (i / 20) * Math.PI * 2;
+                const heartX = 16 * Math.pow(Math.sin(t), 3);
+                const heartY = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+                
+                heartPoints.push({
+                    x: x + heartX * size,
+                    y: y + heartY * size
+                });
             }
+            
+            // إنشاء الزهور في نقاط القلب
+            heartPoints.forEach((point, index) => {
+                setTimeout(() => {
+                    createFlower(point.x, point.y);
+                }, index * 50);
+            });
+            
+            // بدء تساقط الزهور من أعلى الشاشة
+            const fallingInterval = setInterval(() => {
+                createFallingFlower();
+            }, 200);
+            
+            // إيقاف تساقط الزهور بعد 5 ثواني
+            setTimeout(() => {
+                clearInterval(fallingInterval);
+            }, 5000);
         }
 
         // دالة اختيار الإجابة
@@ -640,8 +698,8 @@
             const x = rect.left + rect.width / 2;
             const y = rect.top + rect.height / 2;
             
-            // تفجير الزهور من موقع الزر
-            explodeFlowers(x, y);
+            // تفجير الزهور على شكل قلب من موقع الزر
+            explodeHeart(x, y);
         }
 
         // دالة عرض سؤال الاختيار
