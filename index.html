@@ -382,6 +382,7 @@
             cursor: pointer;
             font-size: 18px;
             transition: transform 0.3s, background-color 0.3s;
+            position: relative;
         }
         
         .option-btn:hover {
@@ -627,7 +628,8 @@
                     x: x,
                     y: y,
                     tx: heartX * size,
-                    ty: heartY * size
+                    ty: heartY * size,
+                    startDelay: Math.random() * 0.3
                 });
             }
             
@@ -641,12 +643,15 @@
                     x: x,
                     y: y,
                     tx: heartX * size,
-                    ty: heartY * size
+                    ty: heartY * size,
+                    startDelay: Math.random() * 0.3
                 });
             }
             
             flowers.forEach(point => {
-                createFlower(point.x, point.y, point.tx, point.ty, 2);
+                setTimeout(() => {
+                    createFlower(point.x, point.y, point.tx, point.ty, 5);
+                }, point.startDelay * 1000);
             });
             
             const fallingInterval = setInterval(() => {
@@ -660,10 +665,15 @@
 
         function selectAnswer(button) {
             document.getElementById('answer-message').style.display = 'block';
-            const rect = button.getBoundingClientRect();
-            const x = rect.left + rect.width / 2;
-            const y = rect.top + rect.height / 2;
             
+            // الحصول على موقع الزر المختار بدقة
+            const buttonRect = button.getBoundingClientRect();
+            
+            // حساب منتصف الزر بالضبط
+            const x = buttonRect.left + buttonRect.width / 2;
+            const y = buttonRect.top + buttonRect.height / 2;
+            
+            // إنشاء تأثير القلب من منتصف الزر المحدد
             createHeartExplosion(x, y);
         }
 
