@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Giga Man</title>
     <style>
-        /* التنسيقات العامة */
         body {
             font-family: 'Tajawal', sans-serif;
             background-color: white;
@@ -42,7 +41,6 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        /* زر تبديل الوضع الليلي - معدل ليكون داخل المربع */
         .theme-switcher {
             position: absolute;
             top: 15px;
@@ -276,7 +274,6 @@
           left: 15px;
         }
         
-        /* تعديلات لتنسيق العناصر مع وجود الزر */
         h1 {
             margin-top: 10px;
         }
@@ -298,6 +295,11 @@
             color: white;
             border: none;
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        button:active {
+            transform: scale(0.95);
         }
         
         #message {
@@ -326,7 +328,6 @@
             color: #f2dede;
         }
         
-        /* تنسيقات الصفحة الأولى */
         #welcome-container {
             display: none;
             margin-top: 20px;
@@ -354,7 +355,6 @@
             font-size: 18px;
         }
         
-        /* تنسيقات السؤال والخيارات */
         #question-container {
             display: none;
             margin-top: 20px;
@@ -389,27 +389,27 @@
             background-color: #45a049;
         }
         
-        /* تأثيرات الزهور */
         .flower {
             position: absolute;
             font-size: 24px;
             pointer-events: none;
             z-index: 5;
-            animation: flower-float 3s linear forwards;
+            animation: none;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
         
-        @keyframes flower-float {
+        @keyframes flower-float-heart {
             0% {
                 transform: translate(0, 0) rotate(0deg) scale(1);
                 opacity: 1;
             }
             100% {
-                transform: translate(var(--tx), var(--ty)) rotate(360deg) scale(0);
+                transform: translate(var(--tx), var(--ty)) rotate(var(--r)) scale(0);
                 opacity: 0;
             }
         }
         
-        /* رسالة الإجابة الصحيحة */
         .correct-answer {
             font-size: 28px;
             color: #4CAF50;
@@ -426,9 +426,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- واجهة التحقق -->
     <div class="container">
-        <!-- زر تبديل الوضع الليلي - داخل المربع -->
         <div class="theme-switcher">
             <label class="switch">
               <input id="input" type="checkbox">
@@ -541,14 +539,12 @@
         <button onclick="checkBirthdate()">تحقق</button>
         <div id="message"></div>
 
-        <!-- صفحة الترحيب -->
         <div id="welcome-container">
             <div id="welcome-title">متزعليش مني يا منة</div>
             <div id="welcome-subtitle">طيب؟</div>
             <button id="welcome-btn" onclick="showQuestion()">طيب</button>
         </div>
 
-        <!-- قسم السؤال -->
         <div id="question-container">
             <div id="question">من صاحب هذا التاريخ الذي يقرأ الآن؟</div>
             <div class="options-container">
@@ -561,11 +557,9 @@
     </div>
 
     <script>
-        // التحكم في الوضع الليلي/النهاري
         const themeToggle = document.getElementById('input');
         const body = document.body;
         
-        // التعديل النهائي - الوضع الأبيض افتراضيًا
         if (localStorage.getItem('darkTheme') === 'true') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
@@ -575,7 +569,6 @@
             localStorage.setItem('darkTheme', 'false');
         }
         
-        // تبديل الوضع مع تأثيرات متسقة
         themeToggle.addEventListener('change', function() {
             if (this.checked) {
                 body.classList.add('dark-theme');
@@ -586,129 +579,99 @@
             }
         });
 
-        // مصفوفة الزهور (سنستخدم رموز Unicode للزهور)
-        const flowerSymbols = [
-            '🌸', '🌺', '🌻', '🌼', '🌷', 
-            '🌹', '🏵️', '💮', '🏵️', '🌺'
-        ];
+        const flowerSymbols = ['🌸', '🌺', '🌻', '🌼', '🌷', '🌹', '🏵️', '💮', '🏵️', '🌺'];
 
-        // دالة إنشاء زهرة
-        function createFlower(x, y) {
+        function createFlower(x, y, tx, ty, duration = 2) {
             const flower = document.createElement('div');
             flower.className = 'flower';
-            
-            // اختيار رمز زهرة عشوائي
             const randomFlower = flowerSymbols[Math.floor(Math.random() * flowerSymbols.length)];
             flower.textContent = randomFlower;
             flower.style.fontSize = `${Math.random() * 20 + 20}px`;
-            
-            // تحديد موقع الزهرة
             flower.style.left = `${x}px`;
             flower.style.top = `${y}px`;
-            
-            // تحديد اتجاه الحركة العشوائي
-            const tx = (Math.random() - 0.5) * 300;
-            const ty = (Math.random() - 0.5) * 300;
             flower.style.setProperty('--tx', `${tx}px`);
             flower.style.setProperty('--ty', `${ty}px`);
-            
+            flower.style.setProperty('--r', `${Math.random() * 360}deg`);
             document.body.appendChild(flower);
             
-            // إزالة الزهرة بعد انتهاء الحركة
+            setTimeout(() => {
+                flower.style.opacity = '1';
+                flower.style.animation = `flower-float-heart ${duration}s forwards`;
+            }, 10);
+            
             setTimeout(() => {
                 flower.remove();
-            }, 4000);
+            }, duration * 1000);
         }
 
-        // دالة إنشاء زهرة تسقط من أعلى الشاشة
         function createFallingFlower() {
-            const flower = document.createElement('div');
-            flower.className = 'flower';
-            
-            // اختيار رمز زهرة عشوائي
-            const randomFlower = flowerSymbols[Math.floor(Math.random() * flowerSymbols.length)];
-            flower.textContent = randomFlower;
-            flower.style.fontSize = `${Math.random() * 20 + 20}px`;
-            
-            // تحديد موقع البداية عشوائي في أعلى الشاشة
             const startX = Math.random() * window.innerWidth;
-            flower.style.left = `${startX}px`;
-            flower.style.top = `-50px`;
-            
-            // تحديد اتجاه الحركة لأسفل مع بعض التمايل الجانبي
             const tx = (Math.random() - 0.5) * 100;
             const ty = window.innerHeight + 50;
-            flower.style.setProperty('--tx', `${tx}px`);
-            flower.style.setProperty('--ty', `${ty}px`);
-            
-            // مدة أطول للزهور الساقطة
-            flower.style.animationDuration = `${Math.random() * 3 + 5}s`;
-            
-            document.body.appendChild(flower);
-            
-            // إزالة الزهرة بعد انتهاء الحركة
-            setTimeout(() => {
-                flower.remove();
-            }, 6000);
+            createFlower(startX, -50, tx, ty, Math.random() * 3 + 5);
         }
 
-        // دالة تفجير الزهور على شكل قلب
-        function explodeHeart(x, y) {
-            // نقاط لتشكيل القلب
-            const heartPoints = [];
-            const size = 15;
+        function createHeartExplosion(x, y) {
+            const numPoints = 60;
+            const size = 30;
+            const flowers = [];
             
-            for (let i = 0; i < 20; i++) {
-                // حساب نقاط القلب باستخدام معادلة القلب
-                const t = (i / 20) * Math.PI * 2;
+            for (let i = 0; i < numPoints; i++) {
+                const angle = (i / numPoints) * Math.PI * 2;
+                const t = angle;
+                
                 const heartX = 16 * Math.pow(Math.sin(t), 3);
                 const heartY = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
                 
-                heartPoints.push({
-                    x: x + heartX * size,
-                    y: y + heartY * size
+                flowers.push({
+                    x: x,
+                    y: y,
+                    tx: heartX * size,
+                    ty: heartY * size
                 });
             }
             
-            // إنشاء الزهور في نقاط القلب
-            heartPoints.forEach((point, index) => {
-                setTimeout(() => {
-                    createFlower(point.x, point.y);
-                }, index * 50);
+            for (let i = 0; i < 20; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const dist = Math.random() * size * 0.7;
+                const heartX = 16 * Math.pow(Math.sin(angle), 3) * (dist/size);
+                const heartY = -(13 * Math.cos(angle) - 5 * Math.cos(2*angle) - 2 * Math.cos(3*angle) - Math.cos(4*angle)) * (dist/size);
+                
+                flowers.push({
+                    x: x,
+                    y: y,
+                    tx: heartX * size,
+                    ty: heartY * size
+                });
+            }
+            
+            flowers.forEach(point => {
+                createFlower(point.x, point.y, point.tx, point.ty, 2);
             });
             
-            // بدء تساقط الزهور من أعلى الشاشة
             const fallingInterval = setInterval(() => {
                 createFallingFlower();
-            }, 200);
+            }, 150);
             
-            // إيقاف تساقط الزهور بعد 5 ثواني
             setTimeout(() => {
                 clearInterval(fallingInterval);
             }, 5000);
         }
 
-        // دالة اختيار الإجابة
         function selectAnswer(button) {
-            // إظهار رسالة "أَصَبتِ"
             document.getElementById('answer-message').style.display = 'block';
-            
-            // الحصول على موقع الزر
             const rect = button.getBoundingClientRect();
             const x = rect.left + rect.width / 2;
             const y = rect.top + rect.height / 2;
             
-            // تفجير الزهور على شكل قلب من موقع الزر
-            explodeHeart(x, y);
+            createHeartExplosion(x, y);
         }
 
-        // دالة عرض سؤال الاختيار
         function showQuestion() {
             document.getElementById('welcome-container').style.display = 'none';
             document.getElementById('question-container').style.display = 'block';
         }
 
-        // دالة التحقق من العمر
         function checkBirthdate() {
             const day = document.getElementById('day').value;
             const month = document.getElementById('month').value;
