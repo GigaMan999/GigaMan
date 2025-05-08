@@ -3,500 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Giga Man</title>
+    <title>كل سنة وأنتِ طيبة</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
+        
         body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: white;
-            color: #333;
-            transition: background-color 0.6s ease, color 0.6s ease;
+            font-family: 'Noto Naskh Arabic', serif;
+            background-color: #0a0a1a;
+            color: #f0f0f0;
             min-height: 100vh;
             padding: 15px;
             text-align: center;
             margin: 0;
             overflow: hidden;
             position: relative;
-        }
-        
-        body.dark-theme {
-            background-color: #121212;
-            color: #f0f0f0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 20%);
         }
         
         .container {
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(20, 20, 40, 0.9);
             border-radius: 15px;
-            padding: 20px;
+            padding: 30px;
             width: 95%;
-            max-width: 100%;
+            max-width: 800px;
             margin: 15px auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.6s ease;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
             position: relative;
             z-index: 10;
-        }
-        
-        body.dark-theme .container {
-            background-color: rgba(30, 30, 30, 0.9);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .theme-switcher {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            z-index: 100;
-        }
-        
-        .switch {
-          position: relative;
-          display: inline-block;
-          width: 50px;
-          height: 30px;
-        }
-
-        .switch #input {
-          opacity: 0;
-          width: 0;
-          height: 0;
-        }
-
-        .slider {
-          position: absolute;
-          cursor: pointer;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background-color: #2196f3;
-          transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-          z-index: 0;
-          overflow: hidden;
-          border-radius: 34px;
-        }
-
-        .sun-moon {
-          position: absolute;
-          height: 22px;
-          width: 22px;
-          left: 4px;
-          bottom: 4px;
-          background-color: yellow;
-          transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-          will-change: transform, background-color;
-          border-radius: 50%;
-          transform: translateX(0);
-        }
-
-        #input:checked + .slider {
-          background-color: black;
-        }
-
-        #input:checked + .slider .sun-moon {
-          transform: translateX(22px);
-          background-color: white;
-        }
-
-        .moon-dot {
-          opacity: 0;
-          transition: opacity 0.3s ease 0.3s;
-          fill: gray;
-        }
-
-        #input:checked + .slider .sun-moon .moon-dot {
-          opacity: 1;
-        }
-
-        #moon-dot-1 {
-          left: 8px;
-          top: 3px;
-          position: absolute;
-          width: 5px;
-          height: 5px;
-          z-index: 4;
-        }
-
-        #moon-dot-2 {
-          left: 2px;
-          top: 8px;
-          position: absolute;
-          width: 8px;
-          height: 8px;
-          z-index: 4;
-        }
-
-        #moon-dot-3 {
-          left: 14px;
-          top: 16px;
-          position: absolute;
-          width: 3px;
-          height: 3px;
-          z-index: 4;
-        }
-
-        #light-ray-1 {
-          left: -8px;
-          top: -8px;
-          position: absolute;
-          width: 38px;
-          height: 38px;
-          z-index: -1;
-          fill: white;
-          opacity: 0;
-          transition: opacity 0.4s ease;
-        }
-
-        #light-ray-2 {
-          left: -50%;
-          top: -50%;
-          position: absolute;
-          width: 50px;
-          height: 50px;
-          z-index: -1;
-          fill: white;
-          opacity: 0;
-          transition: opacity 0.4s ease;
-        }
-
-        #light-ray-3 {
-          left: -15px;
-          top: -15px;
-          position: absolute;
-          width: 55px;
-          height: 55px;
-          z-index: -1;
-          fill: white;
-          opacity: 0;
-          transition: opacity 0.4s ease;
-        }
-
-        body:not(.dark-theme) .light-ray {
-          opacity: 0.1;
-        }
-
-        .cloud-light, .cloud-dark {
-          position: absolute;
-          transition: opacity 0.6s ease;
-        }
-
-        .cloud-light {
-          fill: #eee;
-          opacity: 0;
-        }
-
-        .cloud-dark {
-          fill: #ccc;
-          opacity: 0;
-        }
-
-        body:not(.dark-theme) .cloud-dark {
-          opacity: 1;
-        }
-
-        body.dark-theme .cloud-light {
-          opacity: 1;
-        }
-
-        #cloud-1 {
-          left: 25px;
-          top: 12px;
-          width: 35px;
-        }
-
-        #cloud-2 {
-          left: 38px;
-          top: 8px;
-          width: 18px;
-        }
-
-        #cloud-3 {
-          left: 15px;
-          top: 20px;
-          width: 25px;
-        }
-
-        #cloud-4 {
-          left: 30px;
-          top: 15px;
-          width: 35px;
-        }
-
-        #cloud-5 {
-          left: 42px;
-          top: 12px;
-          width: 18px;
-        }
-
-        #cloud-6 {
-          left: 18px;
-          top: 22px;
-          width: 25px;
-        }
-
-        .stars {
-          transform: translateY(-28px);
-          opacity: 0;
-          transition: all 0.6s ease 0.1s;
-        }
-
-        .star {
-          fill: white;
-          position: absolute;
-          will-change: transform, opacity;
-        }
-
-        body.dark-theme .stars {
-          transform: translateY(0);
-          opacity: 1;
-        }
-
-        #star-1 {
-          width: 18px;
-          top: 2px;
-          left: 3px;
-        }
-
-        #star-2 {
-          width: 5px;
-          top: 14px;
-          left: 3px;
-        }
-
-        #star-3 {
-          width: 10px;
-          top: 18px;
-          left: 8px;
-        }
-
-        #star-4 {
-          width: 16px;
-          top: 0px;
-          left: 15px;
-        }
-        
         h1 {
             margin-top: 10px;
+            font-size: 2.5rem;
+            color: #e0e0ff;
         }
         
         .date-selectors {
-            margin: 20px 0;
+            margin: 30px 0;
         }
         
         select, button {
-            padding: 8px 12px;
-            margin: 0 5px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            font-family: 'Tajawal', sans-serif;
+            padding: 10px 15px;
+            margin: 0 8px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            font-family: 'Noto Naskh Arabic', serif;
+            background-color: #2a2a4a;
+            color: #f0f0f0;
+            font-size: 1rem;
         }
         
         button {
-            background-color: #4CAF50;
+            background-color: #4a6fa5;
             color: white;
             border: none;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        button:hover {
+            background-color: #5a7fb5;
+            transform: translateY(-2px);
         }
         
         button:active {
-            transform: scale(0.95);
+            transform: translateY(0);
         }
         
         #message {
-            margin: 15px 0;
-            padding: 10px;
-            border-radius: 5px;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1rem;
         }
         
         .success {
-            background-color: #dff0d8;
-            color: #3c763d;
+            background-color: rgba(40, 80, 40, 0.7);
+            color: #dff0d8;
+            border: 1px solid #4CAF50;
         }
         
         .error {
-            background-color: #f2dede;
-            color: #a94442;
-        }
-        
-        body.dark-theme .success {
-            background-color: #2d4821;
-            color: #dff0d8;
-        }
-        
-        body.dark-theme .error {
-            background-color: #482121;
+            background-color: rgba(80, 40, 40, 0.7);
             color: #f2dede;
+            border: 1px solid #a94442;
         }
         
-        #welcome-container {
+        #birthday-message {
             display: none;
-            margin-top: 20px;
-            padding: 20px;
-        }
-        
-        #welcome-title {
-            font-size: 28px;
-            margin-bottom: 10px;
+            margin: 50px 0;
+            font-size: 3.5rem;
             font-weight: bold;
-        }
-        
-        #welcome-subtitle {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #666;
-        }
-        
-        body.dark-theme #welcome-subtitle {
-            color: #aaa;
-        }
-        
-        #welcome-btn {
-            padding: 12px 24px;
-            font-size: 18px;
-        }
-        
-        #question-container {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-        }
-        
-        #question {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        
-        .options-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .option-btn {
-            padding: 12px 24px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
-            transition: transform 0.3s, background-color 0.3s;
+            color: #f8f8ff;
             position: relative;
+            padding: 40px 20px;
+            line-height: 1.5;
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
         }
         
-        .option-btn:hover {
-            transform: scale(1.05);
-            background-color: #45a049;
+        .name-container {
+            position: relative;
+            display: inline-block;
+            padding: 0 50px;
         }
         
-        .flower {
+        .moon {
             position: absolute;
-            font-size: 24px;
-            pointer-events: none;
-            z-index: 5;
-            animation: none;
+            right: 50%;
+            top: 50%;
+            transform: translate(50%, -50%);
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(
+                circle at 70% 30%,
+                #fff 0%, 
+                #e0e0ff 15%, 
+                #a0a0c0 40%, 
+                #606080 70%, 
+                #303040 100%
+            );
+            border-radius: 50%;
+            box-shadow: 
+                0 0 30px rgba(200, 200, 255, 0.3),
+                0 0 60px rgba(200, 200, 255, 0.15),
+                0 0 90px rgba(200, 200, 255, 0.05);
+            z-index: -1;
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 1.5s ease-in-out;
+            
+            background-image: 
+                radial-gradient(circle at 65% 25%, rgba(80, 80, 100, 0.8) 3%, transparent 3.5%),
+                radial-gradient(circle at 75% 35%, rgba(80, 80, 100, 0.7) 4%, transparent 4.5%),
+                radial-gradient(circle at 55% 40%, rgba(80, 80, 100, 0.6) 5%, transparent 5.5%),
+                radial-gradient(circle at 60% 60%, rgba(80, 80, 100, 0.7) 4%, transparent 4.5%),
+                radial-gradient(circle at 40% 70%, rgba(80, 80, 100, 0.6) 3%, transparent 3.5%);
         }
         
-        @keyframes flower-float-heart {
-            0% {
-                transform: translate(0, 0) rotate(0deg) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(var(--tx), var(--ty)) rotate(var(--r)) scale(0);
-                opacity: 0;
-            }
+        .moon::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 
+                inset 20px -20px 40px rgba(255, 255, 255, 0.1),
+                inset -10px 10px 30px rgba(0, 0, 0, 0.3);
+            filter: blur(1px);
         }
         
-        .correct-answer {
-            font-size: 28px;
-            color: #4CAF50;
-            margin-top: 20px;
-            font-weight: bold;
-            animation: fadeIn 1s;
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+            overflow: hidden;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite alternate;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 0.3; transform: scale(0.8); }
+        }
+        
+        .shooting-star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, white 50%, rgba(255,255,255,0) 100%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: shoot 5s linear infinite;
+            opacity: 0;
+        }
+        
+        @keyframes shoot {
+            0% { transform: translate(0, 0) scale(1); opacity: 0; }
+            10% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { transform: translate(500px, 200px) scale(0.2); opacity: 0; }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <div class="theme-switcher">
-            <label class="switch">
-              <input id="input" type="checkbox">
-              <div class="slider round">
-                <div class="sun-moon">
-                  <svg id="moon-dot-1" class="moon-dot" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="50"></circle>
-                  </svg>
-                  <svg id="moon-dot-2" class="moon-dot" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="50"></circle>
-                  </svg>
-                  <svg id="moon-dot-3" class="moon-dot" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="50"></circle>
-                  </svg>
-                  <svg id="light-ray-1" class="light-ray" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="50"></circle>
-                  </svg>
-                  <svg id="light-ray-2" class="light-ray" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="50"></circle>
-                  </svg>
-                  <svg id="light-ray-3" class="light-ray" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="50"></circle>
-                  </svg>
-
-                  <svg id="cloud-1" class="cloud-dark" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="50"></circle>
-                  </svg>
-                  <svg id="cloud-2" class="cloud-dark" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="50"></circle>
-                  </svg>
-                  <svg id="cloud-3" class="cloud-dark" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="50"></circle>
-                  </svg>
-                  <svg id="cloud-4" class="cloud-light" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="50"></circle>
-                  </svg>
-                  <svg id="cloud-5" class="cloud-light" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="50"></circle>
-                  </svg>
-                  <svg id="cloud-6" class="cloud-light" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="50"></circle>
-                  </svg>
-                </div>
-                <div class="stars">
-                  <svg id="star-1" class="star" viewBox="0 0 20 20">
-                    <path
-                      d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
-                    ></path>
-                  </svg>
-                  <svg id="star-2" class="star" viewBox="0 0 20 20">
-                    <path
-                      d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
-                    ></path>
-                  </svg>
-                  <svg id="star-3" class="star" viewBox="0 0 20 20">
-                    <path
-                      d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
-                    ></path>
-                  </svg>
-                  <svg id="star-4" class="star" viewBox="0 0 20 20">
-                    <path
-                      d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
-            </label>
-        </div>
-
         <h1>التحقق</h1>
         <p>اختر تاريخ ميلادك للمتابعة:</p>
         
@@ -540,147 +243,72 @@
         <button onclick="checkBirthdate()">تحقق</button>
         <div id="message"></div>
 
-        <div id="welcome-container">
-            <div id="welcome-title">متزعليش مني يا منة</div>
-            <div id="welcome-subtitle">طيب؟</div>
-            <button id="welcome-btn" onclick="showQuestion()">طيب</button>
-        </div>
-
-        <div id="question-container">
-            <div id="question">من صاحب هذا التاريخ الذي يقرأ الآن؟</div>
-            <div class="options-container">
-                <button class="option-btn" onclick="selectAnswer(this)">قَمَر</button>
-                <button class="option-btn" onclick="selectAnswer(this)">بَدر</button>
-                <button class="option-btn" onclick="selectAnswer(this)">هِلَال</button>
-            </div>
-            <div id="answer-message" class="correct-answer" style="display: none;">أَصَبتِ</div>
+        <div id="birthday-message">
+            كُل سَنَة وانتِ طَيِّبَة يَا 
+            <span class="name-container">
+                مِنَّة
+                <div class="moon"></div>
+            </span>
         </div>
     </div>
 
+    <div class="stars" id="stars-container"></div>
+
     <script>
-        const themeToggle = document.getElementById('input');
-        const body = document.body;
-        
-        if (localStorage.getItem('darkTheme') === 'true') {
-            body.classList.add('dark-theme');
-            themeToggle.checked = true;
-        } else {
-            body.classList.remove('dark-theme');
-            themeToggle.checked = false;
-            localStorage.setItem('darkTheme', 'false');
+        // إنشاء النجوم
+        function createStars() {
+            const starsContainer = document.getElementById('stars-container');
+            const starCount = 200;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                const size = Math.random() * 3 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                star.style.animationDelay = `${Math.random() * 3}s`;
+                
+                starsContainer.appendChild(star);
+            }
+            
+            createShootingStars();
         }
         
-        themeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark-theme');
-                localStorage.setItem('darkTheme', 'true');
-            } else {
-                body.classList.remove('dark-theme');
-                localStorage.setItem('darkTheme', 'false');
-            }
-        });
-
-        const flowerSymbols = ['🌸', '🌺', '🌻', '🌼', '🌷', '🌹', '🏵️', '💮', '🏵️', '🌺'];
-
-        function createFlower(x, y, tx, ty, duration = 2) {
-            const flower = document.createElement('div');
-            flower.className = 'flower';
-            const randomFlower = flowerSymbols[Math.floor(Math.random() * flowerSymbols.length)];
-            flower.textContent = randomFlower;
-            flower.style.fontSize = `${Math.random() * 20 + 20}px`;
-            flower.style.left = `${x}px`;
-            flower.style.top = `${y}px`;
-            flower.style.setProperty('--tx', `${tx}px`);
-            flower.style.setProperty('--ty', `${ty}px`);
-            flower.style.setProperty('--r', `${Math.random() * 360}deg`);
-            document.body.appendChild(flower);
+        function createShootingStars() {
+            const starsContainer = document.getElementById('stars-container');
             
-            setTimeout(() => {
-                flower.style.opacity = '1';
-                flower.style.animation = `flower-float-heart ${duration}s forwards`;
-            }, 10);
-            
-            setTimeout(() => {
-                flower.remove();
-            }, duration * 1000);
-        }
-
-        function createFallingFlower() {
-            const startX = Math.random() * window.innerWidth;
-            const tx = (Math.random() - 0.5) * 100;
-            const ty = window.innerHeight + 50;
-            createFlower(startX, -50, tx, ty, Math.random() * 3 + 5);
-        }
-
-        function createHeartExplosion(x, y) {
-            const numPoints = 60;
-            const size = 30;
-            const flowers = [];
-            
-            for (let i = 0; i < numPoints; i++) {
-                const angle = (i / numPoints) * Math.PI * 2;
-                const t = angle;
+            function createShootingStar() {
+                const star = document.createElement('div');
+                star.className = 'shooting-star';
                 
-                const heartX = 16 * Math.pow(Math.sin(t), 3);
-                const heartY = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+                star.style.left = `${Math.random() * 20}%`;
+                star.style.top = `${Math.random() * 20}%`;
+                star.style.animationDelay = `${Math.random() * 10}s`;
                 
-                flowers.push({
-                    x: x,
-                    y: y,
-                    tx: heartX * size,
-                    ty: heartY * size,
-                    startDelay: Math.random() * 0.3
-                });
-            }
-            
-            for (let i = 0; i < 20; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * size * 0.7;
-                const heartX = 16 * Math.pow(Math.sin(angle), 3) * (dist/size);
-                const heartY = -(13 * Math.cos(angle) - 5 * Math.cos(2*angle) - 2 * Math.cos(3*angle) - Math.cos(4*angle)) * (dist/size);
+                starsContainer.appendChild(star);
                 
-                flowers.push({
-                    x: x,
-                    y: y,
-                    tx: heartX * size,
-                    ty: heartY * size,
-                    startDelay: Math.random() * 0.3
-                });
-            }
-            
-            flowers.forEach(point => {
                 setTimeout(() => {
-                    createFlower(point.x, point.y, point.tx, point.ty, 5);
-                }, point.startDelay * 1000);
-            });
+                    star.remove();
+                }, 5000);
+            }
             
-            const fallingInterval = setInterval(() => {
-                createFallingFlower();
-            }, 150);
+            for (let i = 0; i < 5; i++) {
+                createShootingStar();
+            }
             
-            setTimeout(() => {
-                clearInterval(fallingInterval);
-            }, 5000);
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    createShootingStar();
+                }
+            }, 3000);
         }
-
-        function selectAnswer(button) {
-            document.getElementById('answer-message').style.display = 'block';
-            
-            // الحصول على موقع الزر المختار بدقة
-            const buttonRect = button.getBoundingClientRect();
-            
-            // حساب منتصف الزر بالضبط
-            const x = buttonRect.left + buttonRect.width / 2;
-            const y = buttonRect.top + buttonRect.height / 2;
-            
-            // إنشاء تأثير القلب من منتصف الزر المحدد
-            createHeartExplosion(x, y);
-        }
-
-        function showQuestion() {
-            document.getElementById('welcome-container').style.display = 'none';
-            document.getElementById('question-container').style.display = 'block';
-        }
+        
+        window.onload = createStars;
 
         function checkBirthdate() {
             const day = document.getElementById('day').value;
@@ -691,13 +319,24 @@
             if (day === "9" && month === "5" && year === "2011") {
                 messageEl.innerHTML = "تم التحقق بنجاح";
                 messageEl.className = "success";
-                document.getElementById('welcome-container').style.display = 'block';
+                
+                const birthdayMessage = document.getElementById('birthday-message');
+                birthdayMessage.style.display = 'block';
+                
+                document.querySelector('h1').style.display = 'none';
+                document.querySelector('p').style.display = 'none';
+                document.querySelector('.date-selectors').style.display = 'none';
+                document.querySelector('button').style.display = 'none';
+                messageEl.style.marginBottom = '0';
+                
+                setTimeout(() => {
+                    document.querySelector('.moon').style.opacity = '1';
+                }, 500);
             }
             else {
                 messageEl.innerHTML = "صل عالنبي";
                 messageEl.className = "error";
-                document.getElementById('welcome-container').style.display = 'none';
-                document.getElementById('question-container').style.display = 'none';
+                document.getElementById('birthday-message').style.display = 'none';
             }
         }
     </script>
